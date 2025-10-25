@@ -71,7 +71,13 @@ const configuration: webpack.Configuration = {
             options: {
               modules: true,
               sourceMap: true,
-              importLoaders: 1,
+              importLoaders: 2,
+            },
+          },
+          {
+            loader: 'postcss-loader',
+            options: {
+              sourceMap: true,
             },
           },
           'sass-loader',
@@ -80,7 +86,23 @@ const configuration: webpack.Configuration = {
       },
       {
         test: /\.s?css$/,
-        use: ['style-loader', 'css-loader', 'sass-loader'],
+        use: [
+          'style-loader',
+          {
+            loader: 'css-loader',
+            options: {
+              sourceMap: true,
+              importLoaders: 2,
+            },
+          },
+          {
+            loader: 'postcss-loader',
+            options: {
+              sourceMap: true,
+            },
+          },
+          'sass-loader',
+        ],
         exclude: /\.module\.s?(c|a)ss$/,
       },
       // Fonts

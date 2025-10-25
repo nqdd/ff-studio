@@ -1,0 +1,18 @@
+{
+  "style": "new-york",
+  "rsc": true,
+  "tailwind": {
+    "config": "",
+    "css": "src/renderer/styles/globals.css",
+    "baseColor": "neutral",
+    "cssVariables": true
+  },
+  "aliases": {
+    "components": "@/renderer/components",
+    "utils": "@/renderer/lib/utils",
+    "ui": "@/renderer/components/ui",
+    "lib": "@/renderer/lib",
+    "hooks": "@/renderer/hooks"
+  },
+  "iconLibrary": "lucide"
+}

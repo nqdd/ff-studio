@@ -1,9 +1,9 @@
 import { MemoryRouter as Router, Routes, Route } from 'react-router-dom';
-import './App.css';
+import './styles/global.css';
 
 function Hello() {
   return (
-    <div>
+    <div className="w-full h-screen flex justify-center items-center">
       <h1>FF Studio</h1>
     </div>
   );

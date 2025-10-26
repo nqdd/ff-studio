@@ -157,8 +157,8 @@
     "@ffmpeg-installer/ffmpeg": "^1.1.0"
   },
   "build": {
-    "productName": "ElectronReact",
-    "appId": "org.erb.ElectronReact",
+    "productName": "FF Studio",
+    "appId": "com.karsami.ffstudio",
     "asar": true,
     "afterSign": ".erb/scripts/notarize.js",
     "asarUnpack": "**\\*.{node,dll}",

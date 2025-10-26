@@ -3,7 +3,7 @@
 Start the app in the `dev` environment:
 
 ```bash
-npm start
+npm run dev
 ```
 
 ## Packaging for Production

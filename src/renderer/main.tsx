@@ -1,8 +1,9 @@
 import './styles/global.css';
 import { MemoryRouter as Router, Routes, Route } from 'react-router-dom';
 import { FileUpload } from './components/file-upload';
+import { ThemeProvider } from './components/theme-provider';
 
-function Hello() {
+function Index() {
   return (
     <main className="min-h-screen bg-background">
       <div className="container mx-auto px-4 py-8 max-w-6xl">
@@ -14,10 +15,12 @@ function Hello() {
 
 export default function App() {
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<Hello />} />
-      </Routes>
-    </Router>
+    <ThemeProvider>
+      <Router>
+        <Routes>
+          <Route path="/" element={<Index />} />
+        </Routes>
+      </Router>
+    </ThemeProvider>
   );
 }

@@ -26,14 +26,14 @@ class AppUpdater {
 
 let mainWindow: BrowserWindow | null = null;
 
-ipcMain.on('ipc-example', async (event, arg) => {
-  const msgTemplate = (pingPong: string) => `IPC test: ${pingPong}`;
+ipcMain.on('ping', async (event, arg) => {
+  const msgTemplate = (pingPong: string) => `IPC ping: ${pingPong}`;
   console.log(msgTemplate(arg));
-  event.reply('ipc-example', msgTemplate('pong'));
+  event.reply('ping', msgTemplate('pong'));
 });
 
-ipcMain.on('ffmpeg', async () => {
-  ffmpegCommand('', '');
+ipcMain.on('ffmpeg', async (event) => {
+  ffmpegCommand('', '', event);
 });
 
 if (process.env.NODE_ENV === 'production') {

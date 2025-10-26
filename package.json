@@ -152,6 +152,9 @@
     "webpack-dev-server": "^5.2.0",
     "webpack-merge": "^6.0.1"
   },
+  "optionalDependencies": {
+    "@ffmpeg-installer/ffmpeg": "^1.1.0"
+  },
   "build": {
     "productName": "ElectronReact",
     "appId": "org.erb.ElectronReact",

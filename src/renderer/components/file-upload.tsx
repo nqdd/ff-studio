@@ -9,10 +9,13 @@ import {
   CardTitle,
 } from './ui/card';
 import { Button } from './ui/button';
+import { useFileStore } from '../stores/file';
 
 export function FileUpload() {
   const [isDragging, setIsDragging] = useState(false);
-  const [files, setFiles] = useState<File[]>([]);
+  const files = useFileStore((state) => state.files);
+  const setFiles = useFileStore((state) => state.addFile);
+  const removeFile = useFileStore((state) => state.removeFile);
 
   const handleDragOver = (e: React.DragEvent) => {
     e.preventDefault();
@@ -27,18 +30,14 @@ export function FileUpload() {
     e.preventDefault();
     setIsDragging(false);
     const droppedFiles = Array.from(e.dataTransfer.files);
-    setFiles((prev) => [...prev, ...droppedFiles]);
+    setFiles(droppedFiles);
   };
 
   const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       const selectedFiles = Array.from(e.target.files);
-      setFiles((prev) => [...prev, ...selectedFiles]);
+      setFiles(selectedFiles);
     }
-  };
-
-  const removeFile = (index: number) => {
-    setFiles((prev) => prev.filter((_, i) => i !== index));
   };
 
   return (
@@ -102,9 +101,9 @@ export function FileUpload() {
               Selected Files ({files.length})
             </p>
             <div className="space-y-2 max-h-48 overflow-y-auto">
-              {files.map((file, index) => (
+              {files.map((file) => (
                 <div
-                  key={file.path}
+                  key={file.name}
                   className="flex items-center justify-between p-3 bg-secondary/50 rounded-lg"
                 >
                   <div className="flex items-center gap-2 flex-1 min-w-0">
@@ -131,7 +130,7 @@ export function FileUpload() {
                   <button
                     type="button"
                     aria-label="Remove file"
-                    onClick={() => removeFile(index)}
+                    onClick={() => removeFile(file)}
                     className="ml-2 text-muted-foreground hover:text-destructive transition-colors shrink-0"
                   >
                     <svg

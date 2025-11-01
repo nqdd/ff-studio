@@ -8,7 +8,6 @@ ipcMain.on('ping', async (event, arg) => {
 });
 
 ipcMain.on('ffmpeg', async (event, payload) => {
-  console.debug({ event, payload });
   for (const item of payload) {
     console.debug(`converting file ${item.inputPath} to ${item.outputPath}`);
     ffmpegCommand(item.inputPath, item.outputPath, event);

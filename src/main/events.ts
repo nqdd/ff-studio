@@ -20,7 +20,7 @@ ipcMain.on('ffmpeg', async (event, payload) => {
             console.error(`Failed to convert file ${item.inputPath}`);
           }
           event.sender.send('ffmpeg::convert-result', {
-            success,
+            success: false,
             filePath: item.inputPath,
           });
           return success;

@@ -45,23 +45,20 @@ function Index() {
   }, [files, bulkUpdateFiles, convertFiles]);
 
   useEffect(() => {
-    const unsubscribes: Array<() => void> = [];
-    console.debug('useEffect', 'mount', 'ipcRenderer', ipcRenderer);
-    unsubscribes.push(() => {
-      ipcRenderer.on('ffmpeg::convert-result', (result) => {
-        console.debug('ffmpeg::convert-result', result);
-        const { filePath, success } = (result ?? {}) as {
-          filePath: string;
-          success: boolean;
-          error: string;
-        };
-        if (filePath)
-          updateFile({ path: filePath, status: success ? 'success' : 'error' });
-      });
+    console.debug('listening for ffmpeg::convert-result');
+    const unsubscribe = ipcRenderer.on('ffmpeg::convert-result', (result) => {
+      console.debug('ffmpeg::convert-result', result);
+      const { filePath, success } = (result ?? {}) as {
+        filePath: string;
+        success: boolean;
+        error: string;
+      };
+      if (filePath)
+        updateFile({ path: filePath, status: success ? 'success' : 'error' });
     });
 
     return () => {
-      unsubscribes.forEach((unsubscribe) => unsubscribe());
+      unsubscribe?.();
     };
   }, [ipcRenderer, updateFile]);
 

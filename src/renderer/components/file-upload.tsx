@@ -10,14 +10,13 @@ import {
   CardTitle,
 } from './ui/card';
 import { Button } from './ui/button';
-import { useFileStore } from '../stores/file';
-import { FileList } from './files/file-list';
 
-export function FileUpload() {
+type FileUploadProps = {
+  onFilesSelected: (input: HTMLInputElement) => void;
+};
+
+export function FileUpload({ onFilesSelected }: FileUploadProps) {
   const [isDragging, setIsDragging] = useState(false);
-  const files = useFileStore((state) => state.files);
-  const setFiles = useFileStore((state) => state.addFile);
-  const removeFile = useFileStore((state) => state.removeFile);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleDragOver = (e: React.DragEvent) => {
@@ -34,17 +33,13 @@ export function FileUpload() {
     setIsDragging(false);
     if (fileInputRef.current) {
       fileInputRef.current.files = e.dataTransfer.files;
-      const droppedFiles = window.electron.ipcRenderer.getFilesPath(
-        fileInputRef.current,
-      );
-      setFiles(droppedFiles as File[]);
+      onFilesSelected(fileInputRef.current);
     }
   };
 
   const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files) {
-      const selectedFiles = window.electron.ipcRenderer.getFilesPath(e.target);
-      setFiles(selectedFiles as File[]);
+    if (e.target.files && e.target instanceof HTMLInputElement) {
+      onFilesSelected(e.target);
     }
   };
 
@@ -93,17 +88,6 @@ export function FileUpload() {
             </Button>
           </label>
         </div>
-
-        {files.length > 0 && (
-          <div className="space-y-2">
-            <p className="text-sm font-medium text-foreground">
-              Selected Files ({files.length})
-            </p>
-            <div className="max-h-48 overflow-y-auto">
-              <FileList files={files} onRemoveFile={removeFile} />
-            </div>
-          </div>
-        )}
       </CardContent>
     </Card>
   );

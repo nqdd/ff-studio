@@ -108,10 +108,10 @@ export function FileConvert() {
   };
 
   return (
-    <div className="space-y-3">
+    <div className="flex flex-col gap-3">
       <Button
         type="button"
-        className="w-full sm:w-auto"
+        className="w-auto"
         onClick={handleConvert}
         disabled={disableConvert}
       >

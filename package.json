@@ -161,7 +161,11 @@
     "appId": "com.karsami.ffstudio",
     "asar": true,
     "afterSign": ".erb/scripts/notarize.js",
-    "asarUnpack": "**\\*.{node,dll}",
+    "asarUnpack": [
+      "**\\*.{node,dll}",
+      "**/*.{node,dll}",
+      "node_modules/@ffmpeg-installer/**"
+    ],
     "files": [
       "dist",
       "node_modules",
@@ -172,8 +176,7 @@
       "target": {
         "target": "default",
         "arch": [
-          "arm64",
-          "x64"
+          "arm64"
         ]
       },
       "type": "distribution",

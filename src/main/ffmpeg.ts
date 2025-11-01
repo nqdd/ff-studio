@@ -13,17 +13,19 @@ export const ffmpegCommand = async (
   console.debug('ffmpeg path:', ffmpegPath);
   console.debug('ffmpeg version:', ffmpegVersion);
 
-  return new Promise<void>((resolve, reject) => {
+  return new Promise<boolean>((resolve, reject) => {
     const ffmpegProcess = spawn(
       ffmpegPath,
       input && output ? ['-y', '-i', input, output] : ['-y'],
     );
 
+    const ffmpegLogChannel = 'ffmpeg::log';
+
     ffmpegProcess.stdout.on('data', (data) => {
       const msg = `[ffmpeg stdout]: ${data.toString().trim()}`;
       console.debug(msg);
       if (event) {
-        event.reply('log', msg);
+        event.reply(ffmpegLogChannel, msg);
       }
     });
 
@@ -31,7 +33,7 @@ export const ffmpegCommand = async (
       const msg = `[ffmpeg stderr]: ${data.toString().trim()}`;
       console.debug(msg);
       if (event) {
-        event.reply('log', msg);
+        event.reply(ffmpegLogChannel, msg);
       }
     });
 
@@ -39,19 +41,24 @@ export const ffmpegCommand = async (
       const msg = `[ffmpeg error] FFmpeg process error: ${err.message}`;
       console.debug(msg);
       if (event) {
-        event.reply('log', msg);
+        event.reply(ffmpegLogChannel, msg);
       }
       reject(new Error(msg));
     });
 
     ffmpegProcess.on('close', (code) => {
       console.debug('FFmpeg process exited with code: ', code);
-      event?.reply('log', `FFmpeg process exited with code: ${code}`);
+      event?.reply(
+        ffmpegLogChannel,
+        `FFmpeg process exited with code: ${code}`,
+      );
       if (code === 0) {
         console.debug('✅ FFmpeg finished successfully.');
-        resolve();
+        resolve(true);
       } else {
-        reject(new Error(`❌ FFmpeg exited with code ${code}`));
+        reject(
+          new Error(`❌ FFmpeg exited with code ${code}, ${input}, ${output}`),
+        );
       }
     });
   });

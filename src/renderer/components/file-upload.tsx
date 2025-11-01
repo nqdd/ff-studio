@@ -2,13 +2,6 @@ import type React from 'react';
 
 import { useRef, useState } from 'react';
 import { CloudUpload } from 'lucide-react';
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from './ui/card';
 import { Button } from './ui/button';
 
 type FileUploadProps = {
@@ -44,51 +37,41 @@ export function FileUpload({ onFilesSelected }: FileUploadProps) {
   };
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>Upload Files</CardTitle>
-        <CardDescription>Add images or videos to convert</CardDescription>
-      </CardHeader>
-      <CardContent className="space-y-4">
-        <div
-          onDragOver={handleDragOver}
-          onDragLeave={handleDragLeave}
-          onDrop={handleDrop}
-          className={`border-2 border-dashed rounded-lg p-8 text-center transition-all ${
-            isDragging
-              ? 'border-primary bg-primary/5'
-              : 'border-border hover:border-primary/30'
-          }`}
+    <div
+      onDragOver={handleDragOver}
+      onDragLeave={handleDragLeave}
+      onDrop={handleDrop}
+      className={`border-2 border-dashed rounded-lg p-8 text-center transition-all ${
+        isDragging
+          ? 'border-primary bg-primary/5'
+          : 'border-border hover:border-primary/30'
+      }`}
+    >
+      <div className="w-full flex items-center justify-center mb-2">
+        <CloudUpload className="w-12 h-12" />
+      </div>
+      <p className="text-foreground font-medium mb-1">
+        Drag and drop your files here
+      </p>
+      <p className="text-sm text-muted-foreground mb-4">or click to browse</p>
+      <label htmlFor="file-input">
+        <input
+          ref={fileInputRef}
+          type="file"
+          multiple
+          accept="image/*,video/*"
+          onChange={handleFileSelect}
+          className="hidden"
+          id="file-input"
+        />
+        <Button
+          asChild
+          variant="outline"
+          className="cursor-pointer bg-transparent"
         >
-          <div className="w-full flex items-center justify-center mb-2">
-            <CloudUpload className="w-12 h-12" />
-          </div>
-          <p className="text-foreground font-medium mb-1">
-            Drag and drop your files here
-          </p>
-          <p className="text-sm text-muted-foreground mb-4">
-            or click to browse
-          </p>
-          <label htmlFor="file-input">
-            <input
-              ref={fileInputRef}
-              type="file"
-              multiple
-              accept="image/*,video/*"
-              onChange={handleFileSelect}
-              className="hidden"
-              id="file-input"
-            />
-            <Button
-              asChild
-              variant="outline"
-              className="cursor-pointer bg-transparent"
-            >
-              <span>Browse Files</span>
-            </Button>
-          </label>
-        </div>
-      </CardContent>
-    </Card>
+          <span>Browse Files</span>
+        </Button>
+      </label>
+    </div>
   );
 }

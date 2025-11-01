@@ -8,10 +8,7 @@ root.render(<App />);
 window.electron?.ipcRenderer.once('ping', (data) => {
   console.debug(data);
 });
-
-window.electron?.ipcRenderer.on('log', (data) => {
-  console.debug(data);
-});
+window.electron?.ipcRenderer.on('ffmpeg::log', console.debug);
 
 window.electron?.ipcRenderer.sendMessage('ping', ['ping']);
 window.electron?.ipcRenderer.sendMessage('ffmpeg');

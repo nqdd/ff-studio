@@ -1,12 +1,20 @@
-import { FileImage, FileVideo } from 'lucide-react';
 import {
+  CircleCheck,
+  CircleX,
+  FileImage,
+  FileVideo,
+  LoaderCircle,
+} from 'lucide-react';
+import {
+  ConversionFile,
+  ConversionStatus,
   IMAGE_OUTPUT_FORMATS,
   type OutputFormat,
   VIDEO_OUTPUT_FORMATS,
 } from '../../stores/file';
 
 type Props = {
-  file: File;
+  file: ConversionFile;
   outputFormat: OutputFormat;
   onChangeOutputFormat: (outputFormat: OutputFormat) => void;
 };
@@ -16,7 +24,7 @@ export function FileListItem({
   outputFormat,
   onChangeOutputFormat,
 }: Props) {
-  const isVideo = file.type.startsWith('video/');
+  const isVideo = file?.type?.startsWith('video/');
   const Icon = isVideo ? FileVideo : FileImage;
   const availableFormats = isVideo
     ? VIDEO_OUTPUT_FORMATS
@@ -51,4 +59,24 @@ export function FileListItem({
       </select>
     </div>
   );
+}
+
+export function FileListItemConvertStatus({
+  status,
+}: {
+  status: ConversionStatus;
+}) {
+  if (status === 'running') {
+    return <LoaderCircle className="text-blue-400 animate-spin" />;
+  }
+
+  if (status === 'success') {
+    return <CircleCheck className="text-green-400" />;
+  }
+
+  if (status === 'error') {
+    return <CircleX className="text-red-400" />;
+  }
+
+  return null;
 }

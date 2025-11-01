@@ -7,7 +7,12 @@ import {
   webUtils,
 } from 'electron';
 
-export type Channels = 'ping' | 'log' | 'ffmpeg' | 'upload-file';
+export type Channels =
+  | 'ping'
+  | 'ffmpeg'
+  | 'ffmpeg::log'
+  | 'ffmpeg::convert-result'
+  | 'upload-file';
 
 const electronHandler = {
   ipcRenderer: {

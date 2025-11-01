@@ -10,9 +10,10 @@ type Props = {
 export function FileList({ files, onRemoveFile }: Props) {
   return (
     <div className="space-y-2">
-      {files.map((file) => (
+      {files.map((file, index) => (
         <div
-          key={file.name}
+          // eslint-disable-next-line react/no-array-index-key
+          key={`${file.name}-${index}`}
           className="flex items-center justify-between p-3 bg-secondary/50 rounded-lg"
         >
           <FileListItem file={file} />

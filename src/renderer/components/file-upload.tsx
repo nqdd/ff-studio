@@ -1,6 +1,6 @@
 import type React from 'react';
 
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { CloudUpload } from 'lucide-react';
 import {
   Card,
@@ -18,6 +18,7 @@ export function FileUpload() {
   const files = useFileStore((state) => state.files);
   const setFiles = useFileStore((state) => state.addFile);
   const removeFile = useFileStore((state) => state.removeFile);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleDragOver = (e: React.DragEvent) => {
     e.preventDefault();
@@ -31,14 +32,19 @@ export function FileUpload() {
   const handleDrop = (e: React.DragEvent) => {
     e.preventDefault();
     setIsDragging(false);
-    const droppedFiles = Array.from(e.dataTransfer.files);
-    setFiles(droppedFiles);
+    if (fileInputRef.current) {
+      fileInputRef.current.files = e.dataTransfer.files;
+      const droppedFiles = window.electron.ipcRenderer.getFilesPath(
+        fileInputRef.current,
+      );
+      setFiles(droppedFiles as File[]);
+    }
   };
 
   const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
-      const selectedFiles = Array.from(e.target.files);
-      setFiles(selectedFiles);
+      const selectedFiles = window.electron.ipcRenderer.getFilesPath(e.target);
+      setFiles(selectedFiles as File[]);
     }
   };
 
@@ -70,6 +76,7 @@ export function FileUpload() {
           </p>
           <label htmlFor="file-input">
             <input
+              ref={fileInputRef}
               type="file"
               multiple
               accept="image/*,video/*"

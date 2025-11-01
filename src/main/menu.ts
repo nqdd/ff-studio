@@ -54,17 +54,17 @@ export default class MenuBuilder {
 
   buildDarwinTemplate(): MenuItemConstructorOptions[] {
     const subMenuAbout: DarwinMenuItemConstructorOptions = {
-      label: 'FF Studio',
+      label: 'Media Converter',
       submenu: [
         {
-          label: 'About FF Studio',
+          label: 'About Media Converter',
           selector: 'orderFrontStandardAboutPanel:',
         },
         { type: 'separator' },
         { label: 'Services', submenu: [] },
         { type: 'separator' },
         {
-          label: 'Hide FF Studio',
+          label: 'Hide Media Converter',
           accelerator: 'Command+H',
           selector: 'hide:',
         },

@@ -1,5 +1,5 @@
 {
-  "name": "ff-studio",
+  "name": "media-converter",
   "license": "MIT",
   "main": "./.erb/dll/main.bundle.dev.js",
   "scripts": {
@@ -157,8 +157,8 @@
     "@ffmpeg-installer/ffmpeg": "^1.1.0"
   },
   "build": {
-    "productName": "FF Studio",
-    "appId": "com.karsami.ffstudio",
+    "productName": "Media Converter",
+    "appId": "com.karsami.mediaconverter",
     "asar": true,
     "afterSign": ".erb/scripts/notarize.js",
     "asarUnpack": [

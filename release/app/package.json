@@ -1,5 +1,5 @@
 {
-  "name": "ff-studio",
+  "name": "media-converter",
   "version": "4.6.0",
   "license": "MIT",
   "main": "./dist/main/main.js",

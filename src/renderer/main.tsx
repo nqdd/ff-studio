@@ -109,7 +109,7 @@ function Index() {
   return (
     <main className="min-h-screen flex justify-center items-center">
       <div className="container mx-auto px-4 py-10 max-w-6xl space-y-4">
-        <h1 className="text-center text-4xl">FF Studio</h1>
+        <h1 className="text-center text-4xl">Media Converter</h1>
         <h2 className="text-center text-gray-400">Convert images and videos</h2>
         <FileUpload onFilesSelected={handleFilesSelected} />
         {files.length > 0 && (

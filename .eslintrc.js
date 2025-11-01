@@ -17,6 +17,7 @@ module.exports = {
     'react/jsx-props-no-spreading': 'off',
     'react/require-default-props': 'off',
     'no-console': ['error', { allow: ['debug', 'error'] }],
+    'no-restricted-syntax': 'off',
   },
   parserOptions: {
     ecmaVersion: 2022,

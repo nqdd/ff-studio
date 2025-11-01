@@ -7,12 +7,15 @@ export const ffmpegCommand = async (
   event?: IpcMainEvent,
 ) => {
   const { spawn } = await import('child_process');
-  console.debug('ffmpeg path:', ffmpeg.path);
-  console.debug('ffmpeg version:', ffmpeg.version);
+  // ref: https://github.com/electron/packager/issues/740
+  const ffmpegPath = ffmpeg.path.replace('app.asar', 'app.asar.unpacked');
+  const ffmpegVersion = ffmpeg.version;
+  console.debug('ffmpeg path:', ffmpegPath);
+  console.debug('ffmpeg version:', ffmpegVersion);
 
   return new Promise<void>((resolve, reject) => {
     const ffmpegProcess = spawn(
-      ffmpeg.path,
+      ffmpegPath,
       input && output ? ['-y', '-i', input, output] : ['-y'],
     );
 
